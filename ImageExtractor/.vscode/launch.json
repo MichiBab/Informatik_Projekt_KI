@@ -8,7 +8,7 @@
             "name": "g++ - Aktive Datei erstellen und debuggen",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/home/michi/OneDrive/InfoProjekt/ImageExtractor/bin/ImageExtractor",
+            "program": "${workspaceFolder}/bin/ImageExtractor",
             "args": ["${workspaceFolder}/pictures/Input/*"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
