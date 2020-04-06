@@ -153,28 +153,53 @@ void resize_png_file(int x_start, int y_start, int x_end, int y_end) {
 }
 
 
-void process_png_file() {
-
+void print_rgb_data_png_file() {
+  int wertsize = 10000;
+  int werte[wertsize][3];
+  for(int i = 0; i<wertsize;i++){
+    for(int y = 0; y<3;y++){
+      werte[i][y]=0;
+    }
+  }
   for(int y = height-1; y >= 0; y--) {
     png_bytep row = row_pointers[y];
     for(int x = width-1; x >= 0; x--) {
       png_bytep px = &(row[x * 4]);
       //printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
-      
       // Do something awesome for each pixel here...
+      for(int i = 0; i<wertsize;i++){
+        if(werte[i][0] == px[0] && werte[i][1] == px[1] && werte[i][2] == px[2]){
+          i=wertsize;
+        }
+        else if(werte[i][0] == 0 && werte[i][1] == 0 && werte[i][2] == 0){
+          werte[i][0]=px[0];
+          werte[i][1]=px[1];
+          werte[i][2]=px[2];
+          i=wertsize;
+          }
+     
+        }
+      }
+  }
 
+  //ausgabe:
+  for(int i = 0; i<wertsize;i++){
+        if(werte[i][0] == 0 && werte[i][1] == 0 && werte[i][2] == 0){
+          i=wertsize;//break
+        }
+        else{
+          printf("RGB(%3d, %3d, %3d)\n", werte[i][0], werte[i][1], werte[i][2]);
+        }
     }
 
-      
-  }
 
 }
 
 int main(int argc, char *argv[]) {
   if(argc < 2) abort();
   read_png_file(argv[1]);
-  //process_png_file();
-  resize_png_file(0,0,719,719);
+  print_rgb_data_png_file();
+  //resize_png_file(0,0,719,719);
   return 0;
 }
 
