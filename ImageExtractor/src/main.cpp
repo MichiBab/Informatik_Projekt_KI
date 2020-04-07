@@ -161,9 +161,9 @@ void print_rgb_data_png_file() {
       werte[i][y]=0;
     }
   }
-  for(int y = height-1; y >= 0; y--) {
+  for(int y = 0; y <height ; y++) {
     png_bytep row = row_pointers[y];
-    for(int x = width-1; x >= 0; x--) {
+    for(int x = 0; x <width; x++) {
       png_bytep px = &(row[x * 4]);
       //printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
       // Do something awesome for each pixel here...

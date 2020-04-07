@@ -12,4 +12,5 @@
 #define Y_Start 1
 #define X_End 2
 #define Y_End 3
+#define ABWEICHUNG 40 // umso kleiner umso genauer: => Abweichung von pixelwerten
 #endif

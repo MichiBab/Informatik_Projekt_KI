@@ -3,6 +3,7 @@
 #include "../ImageTools/header/ImageLibrary.h"
 #include "../ImageTools/header/ImageDistributor.h"
 #include <iostream>
+#include "../TemplateMatching/header/TemplateMatcher.h"
 
 int FSM_env::state_machine(){
     
@@ -13,13 +14,16 @@ int FSM_env::state_machine(){
     //TODO: mit cond var durch get new input den ablauf resizing und mapping wiederholen lassen
     //while(condvar_no_new_pic:sleep){....} //Alles hier sollte nun im loop sein:
 
-    resizing_state();
+    resizing_state(); 
 
     mapping_state();
 
     //testing
-    
-    
+    PngImage a = image_library->Ground_Images[0];
+    PngImage b = image_library->Ground_Images[5];
+    TemplateMatcher test(a);
+    int x = test.match_tilesize_on_pixel(0,0,b);
+    std::cout<<x<<std::endl;
 }
 
 int FSM_env::resizing_state(){

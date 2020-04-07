@@ -12,5 +12,5 @@ public:
     FSM_env();
     int get_new_Input(PngImage new_input);
     ~FSM_env();
-};
-#endif
+};  
+#endif 
