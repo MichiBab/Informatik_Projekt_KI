@@ -6,5 +6,9 @@ bin/main/FSM_env.o: src/main/FSM_env.cpp src/main/header/FSM_env.h \
  src/main/../ImageTools/header/ImageDistributor.h \
  src/main/../ImageTools/header/PngImage.h \
  src/main/../ImageTools/header/ImageLibrary.h \
- src/main/../TemplateMatching/header/TemplateMatcher.h \
- src/main/../TemplateMatching/header/../../ImageTools/header/PngImage.h
+ src/main/../ImageTools/header/ImageResizer.h \
+ src/main/../ImageTools/header/ImageDistributor.h \
+ src/main/../ImageTools/header/../../TemplateMatching/header/TemplateMatcher.h \
+ src/main/../ImageTools/header/../../TemplateMatching/header/../../ImageTools/header/PngImage.h \
+ src/main/../ImageTools/header/../../main/header/Globals.h \
+ src/main/../TemplateMatching/header/TemplateMatcher.h

@@ -33,8 +33,8 @@ int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage spri
             png_bytep impx = &(img_row[(x_pos+x) * 4]);
             png_bytep sppx = &(sprite_row[x * 4]);
             //Compare
-            printf("TO COMPARE: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x_pos+x, y_pos+y, impx[0], impx[1], impx[2], impx[3]);
-            printf("WITH: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, sppx[0], sppx[1], sppx[2], sppx[3]);
+            //printf("TO COMPARE: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x_pos+x, y_pos+y, impx[0], impx[1], impx[2], impx[3]);
+            //printf("WITH: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, sppx[0], sppx[1], sppx[2], sppx[3]);
             if( ((impx[0])+ABWEICHUNG) >= sppx[0] && sppx[0] >= ((impx[0])-ABWEICHUNG) ){
                 if( ((impx[1])+ABWEICHUNG) >= sppx[1] && sppx[1] >= ((impx[1])-ABWEICHUNG) ){
                     if(((impx[2])+ABWEICHUNG) >= sppx[2] && sppx[2] >= ((impx[2])-ABWEICHUNG)){

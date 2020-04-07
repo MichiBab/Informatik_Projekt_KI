@@ -4,13 +4,7 @@
 #include "PngImage.h"
 #include "ImageLibrary.h"
 
-#define MARIOSMALL 0
-#define MARIOSHROOM 1
-#define MARIOFIRE 2
-#define ENEMY 3
-#define ITEMNONSTATIC 4
-#define ITEMSTATIC 5
-#define BLOCK 6
+
 
 class ImageDistributor{
     private:

@@ -13,4 +13,7 @@
 #define X_End 2
 #define Y_End 3
 #define ABWEICHUNG 40 // umso kleiner umso genauer: => Abweichung von pixelwerten
+//genauigkeitsformel. MATCH hängt intern noch von ABWEICHUNG ab
+//zb: es kan 180 raus ==> ismatch(180) = 256/2 < 180-32 = 128<148
+#define IS_A_MATCH(x) ( ((TILESIZE*TILESIZE) / 2) < x-(TILESIZE*2) )
 #endif

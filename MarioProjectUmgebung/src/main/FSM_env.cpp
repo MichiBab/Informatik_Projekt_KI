@@ -2,8 +2,12 @@
 #include "../ImageTools/header/PngImage.h"
 #include "../ImageTools/header/ImageLibrary.h"
 #include "../ImageTools/header/ImageDistributor.h"
+#include "../ImageTools/header/ImageResizer.h"
 #include <iostream>
 #include "../TemplateMatching/header/TemplateMatcher.h"
+
+#include <chrono>
+#include <ctime>  
 
 int FSM_env::state_machine(){
     
@@ -19,11 +23,13 @@ int FSM_env::state_machine(){
     mapping_state();
 
     //testing
-    PngImage a = image_library->Ground_Images[0];
-    PngImage b = image_library->Ground_Images[5];
-    TemplateMatcher test(a);
-    int x = test.match_tilesize_on_pixel(0,0,b);
-    std::cout<<x<<std::endl;
+    auto start = std::chrono::system_clock::now();
+    ImageResizer resize;
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+    std::cout << "finished computation at " << std::ctime(&end_time)
+              << "elapsed time: " << elapsed_seconds.count() << "s\n";
 }
 
 int FSM_env::resizing_state(){
