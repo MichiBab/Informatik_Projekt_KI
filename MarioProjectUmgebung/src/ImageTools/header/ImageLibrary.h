@@ -5,6 +5,7 @@
 
 class ImageLibrary{
 private:
+    
     int mario_Small_img_count;
     int mario_Shroom_img_count;
     int mario_Fire_img_count;
@@ -13,7 +14,18 @@ private:
     int item_Static_img_count;
     int block_img_count;
     int init_vector(const char* pathchar, int* imgcounter, std::vector<PngImage> *vec);
+
+    //For Singleton Desing Pattern
+    ImageLibrary();  // Private so that it can  not be called
+	ImageLibrary(ImageLibrary const&){};             // copy constructor is private
+	ImageLibrary& operator=(ImageLibrary const&){};  // assignment operator is private
+	static ImageLibrary* m_pInstance;
+    ~ImageLibrary();
+
 public:
+    //For Singleton Desing Pattern
+    static ImageLibrary* getInstance();
+
     //PngImage *Mario_Small_Images;
     std::vector <PngImage> Mario_Small_Images;
     //PngImage *Mario_Shroom_Images;
@@ -40,8 +52,8 @@ public:
     int return_block_img_count();
     int set_input_image(PngImage input);
     int set_resized_image(PngImage resized);
-    ImageLibrary();
-    ~ImageLibrary();
+    //ImageLibrary();
+    //~ImageLibrary();
 };
 
 

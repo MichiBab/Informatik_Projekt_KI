@@ -3,13 +3,14 @@
 #include <pthread.h>
 #include "../ImageTools/header/PngImage.h"
 #include "../ImageTools/header/ImageLibrary.h"
+#include "header/FSM_env.h"
+
 using namespace std;
 
 #include <zlib.h>
 
 
 int main () {
-   ImageLibrary test;
-   int x = 0;
+   FSM_env fsm;
 }
 

@@ -5,6 +5,14 @@
 
 namespace fs = std::experimental::filesystem;
 
+ImageLibrary* ImageLibrary::m_pInstance = NULL;  
+
+ImageLibrary* ImageLibrary::getInstance(){
+   if (!m_pInstance)   // Only allow one instance of class to be generated.
+      m_pInstance = new ImageLibrary;
+   return m_pInstance;
+}
+
 ImageLibrary::ImageLibrary() : mario_Small_img_count(0), mario_Shroom_img_count(0), mario_Fire_img_count(0),
                 enemy_img_count(0), item_Non_Static_img_count(0),item_Static_img_count(0), block_img_count(0){
     
