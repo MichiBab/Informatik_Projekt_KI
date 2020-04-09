@@ -3,8 +3,10 @@
 #include "../ImageTools/header/ImageLibrary.h"
 #include "../ImageTools/header/ImageDistributor.h"
 #include "../ImageTools/header/ImageResizer.h"
-#include <iostream>
+#include "../TemplateMatching/header/Mapper.h"
 #include "../TemplateMatching/header/TemplateMatcher.h"
+#include "../FinderThreads/header/MarioFinder.h"
+#include <iostream>
 
 #include <chrono>
 #include <ctime>  
@@ -24,12 +26,20 @@ int FSM_env::state_machine(){
 
     //testing
     auto start = std::chrono::system_clock::now();
+    
     ImageResizer resize;
+    if(resize.resize()){
+        Mapper mapper;
+        mapper.Map_Mario();
+    }
+
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    std::cout << "finished computation at " << std::ctime(&end_time)
-              << "elapsed time: " << elapsed_seconds.count() << "s\n";
+    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+
+
+    
 }
 
 int FSM_env::resizing_state(){

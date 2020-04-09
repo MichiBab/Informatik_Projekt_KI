@@ -17,8 +17,9 @@ class ImageResizer{
         void resize_png_file(int x_start, int y_start, int x_end, int y_end);
     public:
         ImageResizer();
-        ~ImageResizer();
         bool resize();
+        ~ImageResizer();
+        
 
 };
 

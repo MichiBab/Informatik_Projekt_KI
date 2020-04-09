@@ -25,28 +25,37 @@ for(int y = 0; y <height ; y++) {
 
 //Fehlerbehandlungen von außerhalb? für geschwindigkeit
 int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite){
-    int matchings = 0;
-    for(int y = 0; y < TILESIZE; y++){
-        png_bytep img_row = input_ptr->row_pointers[y_pos+y];
-        png_bytep sprite_row = sprite.row_pointers[y];
-        for(int x = 0; x<TILESIZE;x++){
-            png_bytep impx = &(img_row[(x_pos+x) * 4]);
-            png_bytep sppx = &(sprite_row[x * 4]);
-            //Compare
-            //printf("TO COMPARE: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x_pos+x, y_pos+y, impx[0], impx[1], impx[2], impx[3]);
-            //printf("WITH: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, sppx[0], sppx[1], sppx[2], sppx[3]);
-            if( ((impx[0])+ABWEICHUNG) >= sppx[0] && sppx[0] >= ((impx[0])-ABWEICHUNG) ){
-                if( ((impx[1])+ABWEICHUNG) >= sppx[1] && sppx[1] >= ((impx[1])-ABWEICHUNG) ){
-                    if(((impx[2])+ABWEICHUNG) >= sppx[2] && sppx[2] >= ((impx[2])-ABWEICHUNG)){
-                        //printf("\nTRUE\n");
-                        matchings++;
-                    }
-                }
-            }
+    return match_tilesize_on_pixel(x_pos,y_pos,sprite,TILESIZE,TILESIZE);
+}
 
-        }
+int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite, int tilesize_X, int tilesize_Y){
+    int matchings = 0;
+    for(int y = 0; y < tilesize_Y; y++){
+        //if((y_pos+y)>=0 && (y_pos+y) < height){
+            png_bytep img_row = input_ptr->row_pointers[y_pos+y];
+            png_bytep sprite_row = sprite.row_pointers[y];
+            for(int x = 0; x < tilesize_X;x++){
+                //if((x_pos+x) >= 0 && (x_pos+x) < height){     //ZU LANGSAM MIT ERROR ABFRAGE!!!
+                    png_bytep impx = &(img_row[(x_pos+x) * 4]);
+                    png_bytep sppx = &(sprite_row[x * 4]);
+                    //Compare
+                    //printf("TO COMPARE: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x_pos+x, y_pos+y, impx[0], impx[1], impx[2], impx[3]);
+                    //printf("WITH: %4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, sppx[0], sppx[1], sppx[2], sppx[3]);
+                    if( ((impx[0])+ABWEICHUNG) >= sppx[0] && sppx[0] >= ((impx[0])-ABWEICHUNG) ){
+                        if( ((impx[1])+ABWEICHUNG) >= sppx[1] && sppx[1] >= ((impx[1])-ABWEICHUNG) ){
+                            if(((impx[2])+ABWEICHUNG) >= sppx[2] && sppx[2] >= ((impx[2])-ABWEICHUNG)){
+                                //printf("\nTRUE\n");
+                                matchings++;
+                            }
+                        }
+                    }
+                //}
+
+            }
+        //}
     }
     return matchings;
+
 }
 
 TemplateMatcher::TemplateMatcher(PngImage& input){

@@ -7,6 +7,7 @@ private:
 public:
     TemplateMatcher(PngImage& input);
     int match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite);
+    int match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite, int tilesize_X, int tilesize_Y);
     ~TemplateMatcher();
 };
 

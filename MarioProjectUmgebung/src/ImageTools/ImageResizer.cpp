@@ -10,16 +10,35 @@
         ImageResizer();
         bool resize();*/
 
-ImageResizer::ImageResizer(){
+/*//unten links bis oben rechts
+    for(int y = height-1; y >= 0; y--){
+        png_bytep row = resized.row_pointers[y];
+        for(int x = 0; x < width ;x++){
+            png_bytep px = &(row[(x) * 4]);
+            
+        }
+    }*/
+
+bool ImageResizer::resize(){
     if(find_block()){
         //std::cout<<"FOUND";
         find_mapping_data();
+        ImageLibrary* image_library = ImageLibrary::getInstance(); 
+        PngImage resizedImage("pictures/Resized/resized.png");
+        image_library->set_resized_image(resizedImage);
+        return true;
     }
     else{
         std::cout<<"NOTFOUND";
-        abort();
+        return false;
+        //abort();
     }
 }
+
+ImageResizer::ImageResizer(){
+    
+}
+
 ImageResizer::~ImageResizer(){
 
 }
@@ -48,7 +67,9 @@ bool ImageResizer::find_block(){
     height = resized.return_height();
     width = resized.return_width();
     int erg = 0;
+    int biggest = 0;
     while(true){
+        //PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
         PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
         if(am_i_done){break;}
         for(int y = 0; y < height-TILESIZE;y++){
@@ -75,7 +96,7 @@ void ImageResizer::resize_png_file(int x_start, int y_start, int x_end, int y_en
     PngImage input = distr.grab_input_img();
     int new_width = x_end-x_start +1;
     int new_height = y_end-y_start +1;
-  
+
     //IO Operations
     FILE *fp = fopen("pictures/Resized/resized.png", "wb");
     if(!fp) abort();
