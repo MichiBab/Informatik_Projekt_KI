@@ -62,7 +62,7 @@ FinderThread::~FinderThread(){
 
 }
 
-bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
+bool FinderThread::search(int xstart, int xend, int ystart, int yend, Mapper *mapper){
   bool am_i_done = false;
   int erg = 0;
   switch(typ){
@@ -70,13 +70,11 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_enemy_img(&am_i_done);
         if(am_i_done){break;}
-        //printf("\nNEW ENEMY:");
-        //print_rgb_data_png_file(img);
-        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
-          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
-            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+        for(int x = xstart; x<= xend;x++){
+          for(int y = ystart; y<=yend;y++){
+            if(mapper->check_if_free(x,y)){
               if(gridsc.grid_matching_non_static(x,y,img,ENEMY_UNTERE_FLANKE,ENEMY_OBERE_FLANKE)){
-                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ENEMY);
+                mapper->write_to_output_array(x, y, ENEMY);
               }
             }
           }
@@ -87,11 +85,11 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_item_Non_Static_img(&am_i_done);
         if(am_i_done){break;}
-        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
-          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
-            if(mapper->check_if_free(x,y)){
-              if(gridsc.grid_matching_non_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){//TODO SHROOMS KALIBRIEREN
-                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
+        for(int x = xstart; x<= xend;x++){
+          for(int y = ystart; y<=yend;y++){
+            if(mapper->check_if_free(x-xstart,y-ystart)){
+              if(gridsc.grid_matching_non_static(x,y,img,SHROOM_UNTERE_FLANKE,SHROOM_OBERE_FLANKE)){//TODO SHROOMS KALIBRIEREN
+                mapper->write_to_output_array(x, y, ITEM);
               }
             }
           }
@@ -101,11 +99,11 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_item_Static_img(&am_i_done);
         if(am_i_done){break;}
-        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
-          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
+        for(int x = xstart; x<= xend;x++){
+          for(int y = ystart; y<=yend;y++){
             if(mapper->check_if_free(x,y)){
-              if(gridsc.grid_matching_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){//TODO FLOWER KALIBRIEREN
-                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
+              if(gridsc.grid_matching_static(x,y,img,FLOWER_UNTERE_FLANKE,FLOWER_OBERE_FLANKE)){//TODO FLOWER KALIBRIEREN
+                mapper->write_to_output_array(x, y, ITEM);
               }
             }
           }
@@ -116,11 +114,11 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_block_img(&am_i_done);
         if(am_i_done)break;
-        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
-          for(int y = gridpositions[Y_Start]; y<= gridpositions[Y_End];y++){
-            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+        for(int x = xstart; x<= xend;x++){
+          for(int y = ystart; y<= yend;y++){
+            if(mapper->check_if_free(x,y)){
               if(gridsc.grid_matching_static(x,y,img,BLOCK_UNTERE_FLANKE,BLOCK_OBERE_FLANKE)){
-                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], BLOCK);
+                mapper->write_to_output_array(x, y, BLOCK);
               }
             }
           }
@@ -130,11 +128,11 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_pipe_img(&am_i_done);
         if(am_i_done)break;
-        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
-          for(int y = gridpositions[Y_Start]; y<= gridpositions[Y_End];y++){
-            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+        for(int x = xstart; x<= xend;x++){
+          for(int y = ystart; y<= yend;y++){
+            if(mapper->check_if_free(x,y)){
               if(gridsc.grid_matching_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){
-                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], BLOCK);
+                mapper->write_to_output_array(x, y, BLOCK);
               }
             }
           }

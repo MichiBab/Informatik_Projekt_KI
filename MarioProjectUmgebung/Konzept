@@ -23,4 +23,8 @@ Testungen:
     auf 181 beim richtingen
     //goomba 184 - 188
     ==> enemykalibrierung 175 - 195
+
+    not multithreading enemys items: 0.34 sec bei 13x13
+        mit: jede spalte 1 thread: 0.08 sec
+
     

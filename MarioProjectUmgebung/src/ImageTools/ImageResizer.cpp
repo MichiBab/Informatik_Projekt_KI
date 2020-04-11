@@ -62,6 +62,7 @@ bool ImageResizer::find_mapping_data(){
 
 bool ImageResizer::find_block(){
     PngImage resized = distr.grab_input_img();
+    ImageDistributor newdistr;
     TemplateMatcher matcher(resized);
     bool am_i_done = false;
     height = resized.return_height();
@@ -70,7 +71,7 @@ bool ImageResizer::find_block(){
     int biggest = 0;
     while(true){
         //PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
-        PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
+        PngImage& rBlock = newdistr.grab_next_block_img(&am_i_done);
         if(am_i_done){break;}
         for(int y = 0; y <= height-TILESIZE;y++){
             for(int x = 0; x<= width-TILESIZE;x++){

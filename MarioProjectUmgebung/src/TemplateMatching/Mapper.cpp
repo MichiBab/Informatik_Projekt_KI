@@ -25,16 +25,16 @@ std::mutex mutex;
 
 bool Mapper::write_to_output_array(int grid_x, int grid_y, int DISTR_IMAGES){
     mutex.lock();
-    ErgebnisArray[grid_x][grid_y] = DISTR_IMAGES;
+    ErgebnisArray[grid_x-MappingArray[X_Start]][grid_y-MappingArray[Y_Start]] = DISTR_IMAGES;
     mutex.unlock();
 }
 
 bool Mapper::check_if_free(int grid_x,int grid_y){
-    return (ErgebnisArray[grid_x][grid_y] == 0);
+    return (ErgebnisArray[grid_x-MappingArray[X_Start]][grid_y-MappingArray[Y_Start]] == 0);
 }
 
 Mapper::Mapper(): last_mario_pos_x(0), last_mario_pos_y(0){
-
+    //ErgebnisArray.resize(GRIDRADIUS, std::vector<int>(GRIDRADIUS, 0));
 }
 
 Mapper::~Mapper(){
@@ -43,10 +43,20 @@ Mapper::~Mapper(){
 
 int Mapper::print_erg_radius(){
     for(int y = 0; y<GRIDRADIUS;y++){
-        for(int x = 0; x<GRIDRADIUS;x++){
-            printf("%d ",ErgebnisArray[x][y]);
-        }
         printf("\n");
+        for(int x = 0; x<GRIDRADIUS;x++){
+            std::cout<<ErgebnisArray[x][y]<< " ";
+
+        }
+    }
+    printf("\n\n");
+}
+
+int Mapper::return_erg_array(int arr[GRIDRADIUS][GRIDRADIUS]){
+    for(int x = 0; x<GRIDRADIUS;x++){
+        for(int y = 0; y<GRIDRADIUS;y++){
+            arr[x][y] = ErgebnisArray[x][y];
+        }
     }
 }
 
@@ -96,8 +106,36 @@ bool Mapper::Map_Mario(){
     }
     for(int i = 0; i<MARIOFINDERTHREADS;i++){
         if(bools[i]){
-            std::cout << "MARIO FOUND ON X:"<<finders[i].return_x_pos()<<" AND Y:"
-                        <<finders[i].return_y_pos()<<"\n";
+            //std::cout << "MARIO FOUND ON X:"<<finders[i].return_x_pos()<<" AND Y:"
+            //            <<finders[i].return_y_pos()<<"\n";
+            last_mario_pos_x = finders[i].return_x_pos();
+            last_mario_pos_y = finders[i].return_y_pos();
+            Create_Array_Around_Mario(finders[i].return_is_big());
+            return true;
+        }
+    }
+    //-------------------------------------------------------------------------------------
+    //such im ganzen foto nochmal, vielleicht ist er gestorben und seine near position ist weg
+    start_x = 0;
+    start_y = 0;
+    end_x = width;
+    end_y = height;
+    for(int i = 0; i < MARIOFINDERTHREADS;i++){
+        bools[i]=false;
+        threads[i] = std::thread(&MarioFinder::search_for_Mario_threaded,
+                    &finders[i],start_x,end_x,start_y,(end_y/MARIOFINDERTHREADS)*(i+1),&bools[i]);
+
+                    //printf(" %d-%d,",start_y,(end_y/MARIOFINDERTHREADS)*(i+1));
+
+        start_y = end_y/MARIOFINDERTHREADS*(i+1)-tilesize_mario_big_y;
+    }
+    for(int i = 0; i<MARIOFINDERTHREADS;i++){
+        threads[i].join();
+    }
+    for(int i = 0; i<MARIOFINDERTHREADS;i++){
+        if(bools[i]){
+            //std::cout << "MARIO FOUND ON X:"<<finders[i].return_x_pos()<<" AND Y:"
+            //            <<finders[i].return_y_pos()<<"\n";
             last_mario_pos_x = finders[i].return_x_pos();
             last_mario_pos_y = finders[i].return_y_pos();
             Create_Array_Around_Mario(finders[i].return_is_big());
@@ -178,7 +216,7 @@ int Mapper::Create_Array_Around_Mario(bool bigflag){
         array_y = GRIDRADIUS/2;
     }
 
-    printf("%d %d\n%d %d\n ",mariogrid_x,mariogrid_y,array_x,array_y);
+    //printf("%d %d\n%d %d\n ",mariogrid_x,mariogrid_y,array_x,array_y);
     ErgebnisArray[array_x][array_y]=MARIO;
 
     if(bigflag){
@@ -192,29 +230,71 @@ int Mapper::Create_Array_Around_Mario(bool bigflag){
     MappingArray[Y_Start] = mariogrid_y - array_y; 
     MappingArray[X_End] = MappingArray[X_Start] + GRIDRADIUS-1;
     MappingArray[Y_End] = MappingArray[Y_Start] + GRIDRADIUS-1;
-    std::cout<<"MARIO POS IN REAL MAP IN GRIDS: (X)(Y):"<<mariogrid_x<<" " 
-        << mariogrid_y<<" \n";
-    std::cout<<"MARIO POS IN ARRAY: (X)(Y):"<<array_x<<" " << array_y<<" \n";
-    std::cout<<"ERG ARRAY ON REAL MAP: (X)(Y) bis (XEND)(YEND):"<<
-        MappingArray[X_Start]<<" " << MappingArray[Y_Start]<<" " 
-        <<MappingArray[X_End]<<" " <<MappingArray[Y_End]<<" \n";
+    //std::cout<<"MARIO POS IN REAL MAP IN GRIDS: (X)(Y):"<<mariogrid_x<<" " 
+    //    << mariogrid_y<<" \n";
+    //std::cout<<"MARIO POS IN ARRAY: (X)(Y):"<<array_x<<" " << array_y<<" \n";
+    //std::cout<<"ERG ARRAY ON REAL MAP: (X)(Y) bis (XEND)(YEND):"<<
+    //    MappingArray[X_Start]<<" " << MappingArray[Y_Start]<<" " 
+    //    <<MappingArray[X_End]<<" " <<MappingArray[Y_End]<<" \n";
 
-    print_erg_radius();
+    //print_erg_radius();
 
 }
 
 int Mapper::Map_Blocks_Threaded(){
-    FinderThread blocks(BLOCK);
-    blocks.search(MappingArray,this);
+    int start_x=MappingArray[X_Start];
+    int start_y=MappingArray[Y_Start];
+    int end_y=MappingArray[Y_End];
+    int end_x=MappingArray[X_End];
+
+    std::thread threads[FINDERTHREADS];
+    std::vector<FinderThread> blocks(FINDERTHREADS, FinderThread(BLOCK));
+    for(int i = 0; i < FINDERTHREADS;i++){
+        threads[i] = std::thread(&FinderThread::search,
+                    &blocks[i],start_x,end_x,start_y,start_y,this);
+        start_y+=1;
+    }
+    for(int i = 0; i<FINDERTHREADS;i++){
+        threads[i].join();
+    }
 }
 
 int Mapper::Map_Enemys_Threaded(){
-    FinderThread enemys(ENEMY);
-    enemys.search(MappingArray,this);
+    /*FinderThread enemys(ENEMY);
+    enemys.search(MappingArray[X_Start],MappingArray[X_End],MappingArray[Y_Start],MappingArray[Y_End],this);*/
+    int start_x=MappingArray[X_Start];
+    int start_y=MappingArray[Y_Start];
+    int end_y=MappingArray[Y_End];
+    int end_x=MappingArray[X_End];
+
+    std::thread threads[FINDERTHREADS];
+    std::vector<FinderThread> enemys(FINDERTHREADS, FinderThread(ENEMY));
+    for(int i = 0; i < FINDERTHREADS;i++){
+        threads[i] = std::thread(&FinderThread::search,
+                    &enemys[i],start_x,end_x,start_y,start_y,this);
+        start_y+=1;
+    }
+    for(int i = 0; i<FINDERTHREADS;i++){
+        threads[i].join();
+    }
 
 }
 
 int Mapper::Map_Items_Threaded(){
-    FinderThread items(ITEM);
-    items.search(MappingArray,this);
+    int start_x=MappingArray[X_Start];
+    int start_y=MappingArray[Y_Start];
+    int end_y=MappingArray[Y_End];
+    int end_x=MappingArray[X_End];
+
+    std::thread threads[FINDERTHREADS];
+    std::vector<FinderThread> items(FINDERTHREADS, FinderThread(ITEM));
+    for(int i = 0; i < FINDERTHREADS;i++){
+        threads[i] = std::thread(&FinderThread::search,
+                    &items[i],start_x,end_x,start_y,start_y,this);
+        start_y+=1;
+    }
+    for(int i = 0; i<FINDERTHREADS;i++){
+        threads[i].join();
+    }
+    
 }

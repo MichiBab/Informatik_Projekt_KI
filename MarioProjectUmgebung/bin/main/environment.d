@@ -1,4 +1,5 @@
-bin/main/FSM_env.o: src/main/FSM_env.cpp src/main/header/Environment.h \
+bin/main/environment.o: src/main/environment.cpp \
+ src/main/header/Environment.h \
  src/main/header/../../ImageTools/header/PngImage.h \
  src/main/../ImageTools/header/PngImage.h \
  src/main/../ImageTools/header/ImageLibrary.h \

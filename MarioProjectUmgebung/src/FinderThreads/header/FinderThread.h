@@ -15,6 +15,6 @@ class FinderThread{
     public:
         FinderThread(int DISTR_IMAGEES);
         ~FinderThread();
-        bool search(int gridpositions[MAPPINGDATA], Mapper *mapper); //xystart xyend
+        bool search(int xstart, int xend, int ystart, int yend, Mapper *mapper); //xystart xyend
 };
 #endif

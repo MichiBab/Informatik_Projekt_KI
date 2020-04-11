@@ -6,7 +6,7 @@
 #define BLOCK 2
 #define ENEMY 3
 #define ITEM 4
-#define GRIDRADIUS 15 //5x5grid
+#define GRIDRADIUS 5 //5x5grid
 #define MAPPINGDATA 4 //positions from to where
 #define X_Start 0 //For Mappings Array 
 #define Y_Start 1
@@ -36,6 +36,10 @@
 #define PIPES_OBERE_FLANKE 260
 #define ENEMY_UNTERE_FLANKE 175
 #define ENEMY_OBERE_FLANKE 195 
+#define SHROOM_UNTERE_FLANKE 175
+#define SHROOM_OBERE_FLANKE 190
+#define FLOWER_UNTERE_FLANKE 155
+#define FLOWER_OBERE_FLANKE 170
 //THREADCOUNTS
 #define MARIOFINDERTHREADS 25
 #define FINDERTHREADS GRIDRADIUS //threads pro FINDER
