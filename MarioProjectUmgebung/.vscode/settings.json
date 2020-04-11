@@ -56,6 +56,8 @@
         "cfenv": "cpp",
         "cinttypes": "cpp",
         "typeinfo": "cpp",
-        "*.txx": "cpp"
+        "*.txx": "cpp",
+        "condition_variable": "cpp",
+        "mutex": "cpp"
     }
 }

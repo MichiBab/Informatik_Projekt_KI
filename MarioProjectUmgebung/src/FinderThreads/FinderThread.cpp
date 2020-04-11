@@ -1,4 +1,88 @@
+#include "header/FinderThread.h"
+#include "../TemplateMatching/header/GridScanner.h"
+/*class FinderThread{
+    private:
+        ImageDistributor distr;
+        PngImage &resized;
+    public:
+        FinderThread(PngImage &resized, int MODUS, int DISTR_IMAGEES);
+        ~FinderThread();
+        bool search(int gridpositions[MAPPINGDATA]); //xystart xyend
+};
+*/
 
+FinderThread::FinderThread(int TYP): resized(distr.grab_resized_img()) , gridsc(){
+  this->typ = TYP;
+}
+
+FinderThread::~FinderThread(){
+
+}
+
+bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
+  bool am_i_done = false;
+  int erg = 0;
+  switch(typ){
+    case ENEMY:
+      while(true){
+        PngImage& img = distr.grab_next_enemy_img(&am_i_done);
+        if(am_i_done){break;}
+        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
+          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
+            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+              if(gridsc.grid_matching_non_static(x,y,img)){
+                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ENEMY);
+              }
+            }
+          }
+        }
+      }
+    break;
+    case ITEM:
+      while(true){
+        PngImage& img = distr.grab_next_item_Non_Static_img(&am_i_done);
+        if(am_i_done){break;}
+        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
+          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
+            if(mapper->check_if_free(x,y)){
+              if(gridsc.grid_matching_non_static(x,y,img)){
+                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
+              }
+            }
+          }
+        }
+      }
+      while(true){
+        PngImage& img = distr.grab_next_item_Static_img(&am_i_done);
+        if(am_i_done){break;}
+        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
+          for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
+            if(mapper->check_if_free(x,y)){
+              if(gridsc.grid_matching_static(x,y,img)){
+                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
+              }
+            }
+          }
+        }
+      }
+    break;
+    case BLOCK:
+      while(true){
+        PngImage& img = distr.grab_next_block_img(&am_i_done);
+        if(am_i_done)break;
+        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
+          for(int y = gridpositions[Y_Start]; y<= gridpositions[Y_End];y++){
+            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+              if(gridsc.grid_matching_static(x,y,img)){
+                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], BLOCK);
+              }
+            }
+          }
+        }
+      }
+    break;
+    }
+}
 
 
 
@@ -57,3 +141,5 @@ static int  print_different_rgbs_for_testing(int height, int width, png_bytep* r
 
 }
 */
+
+

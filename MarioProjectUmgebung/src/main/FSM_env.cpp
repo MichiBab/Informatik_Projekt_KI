@@ -28,9 +28,19 @@ int FSM_env::state_machine(){
     auto start = std::chrono::system_clock::now();
     
     ImageResizer resize;
+    Mapper mapper;
+
+    //ABLAUF
     if(resize.resize()){
-        Mapper mapper;
-        mapper.Map_Mario();
+        if(mapper.Map_Mario()){
+            printf("mario found\n");
+            mapper.Map_Enemys_Threaded();
+            mapper.Map_Blocks_Threaded();
+            mapper.Map_Items_Threaded();
+            mapper.print_erg_radius();
+        }
+        //printf("mario not found\n");
+        
     }
 
     auto end = std::chrono::system_clock::now();
