@@ -5,25 +5,6 @@
 TemplateMatcher::~TemplateMatcher(){
     
 }
-
-/*
-VON UNTEN RECHTS BIS OBEN LINKS:
-for(int y = height-1; y >= 0; y--) {
-    png_bytep row = row_pointers[y];
-    for(int x = width-1; x >= 0; x--) {
-      png_bytep px = &(row[x * 4]);*/
-
-/*  
-VON OBEN LINKS BIS UNTEN RECHTS
-for(int y = 0; y <height ; y++) {
-    png_bytep row = row_pointers[y];
-    for(int x = 0; x <width; x++) {
-      png_bytep px = &(row[x * 4]);*/
-//printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
-
-// px+offset < sppx > px-offset
-
-//Fehlerbehandlungen von außerhalb? für geschwindigkeit
 int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite){
     return match_tilesize_on_pixel(x_pos,y_pos,sprite,TILESIZE,TILESIZE);
 }
@@ -50,9 +31,7 @@ int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage spri
             }
     }
     return matchings;
-
 }
-
 TemplateMatcher::TemplateMatcher(PngImage& input){
     input_ptr = &input;
 }

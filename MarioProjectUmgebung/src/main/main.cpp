@@ -16,18 +16,26 @@ using namespace std;
 
 int main () {
    
-   auto start = std::chrono::system_clock::now();
+  // auto start = std::chrono::system_clock::now();
    Environment fsm;
    int ergArray[GRIDRADIUS][GRIDRADIUS];
-   for(int i = 0; i<1;i++){
 
-      fsm.environment_interface("pictures/Input/input.png",ergArray);
-   }
-
-   auto end = std::chrono::system_clock::now();
-    std::chrono::duration<double> elapsed_seconds = end-start;
-    std::time_t end_time = std::chrono::system_clock::to_time_t(end);
-    std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
+   fsm.environment_interface("pictures/Input/input.png",ergArray);
+/* //PRINTING ARRAY
+   printf("\n");
+   for(int y = 0; y<GRIDRADIUS;y++){
+      for(int x= 0; x<GRIDRADIUS;x++){
+         printf("%d ",ergArray[x][y]);
+         }
+      printf("\n");
+      }
+   printf("\n");
+   //}
+*/
+  // auto end = std::chrono::system_clock::now();
+   // std::chrono::duration<double> elapsed_seconds = end-start;
+  //  std::time_t end_time = std::chrono::system_clock::to_time_t(end);
+  //  std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
    
 }
 

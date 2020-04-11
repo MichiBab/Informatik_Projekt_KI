@@ -70,10 +70,9 @@ bool ImageResizer::find_block(){
     int erg = 0;
     int biggest = 0;
     while(true){
-        //PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
         PngImage& rBlock = newdistr.grab_next_block_img(&am_i_done);
         if(am_i_done){break;}
-        for(int y = 0; y <= height-TILESIZE;y++){
+        for(int y = height-TILESIZE; y > 0 ;y--){
             for(int x = 0; x<= width-TILESIZE;x++){
                 erg = matcher.match_tilesize_on_pixel(x,y,rBlock);
                 if(IS_A_MATCH(erg)){
