@@ -51,10 +51,6 @@ int Mapper::print_erg_radius(){
 }
 
 bool Mapper::Map_Mario(){
-    MarioFinder mariofinder;
-    MarioFinder mariofinder2;
-    MarioFinder mariofinder3;
-    MarioFinder mariofinder4;
     int start_x;
     int start_y;
     int end_x;
@@ -82,7 +78,7 @@ bool Mapper::Map_Mario(){
     if(start_y<0)start_y=0;
     if(end_x>width)end_x = width;
     if(end_y>height)end_y = height;
-
+    //printf("%4d,%4d",height,width);
     bool bools[MARIOFINDERTHREADS];
     std::thread threads[MARIOFINDERTHREADS];
     MarioFinder finders[MARIOFINDERTHREADS];
@@ -90,7 +86,10 @@ bool Mapper::Map_Mario(){
         bools[i]=false;
         threads[i] = std::thread(&MarioFinder::search_for_Mario_threaded,
                     &finders[i],start_x,end_x,start_y,(end_y/MARIOFINDERTHREADS)*(i+1),&bools[i]);
-        start_y = end_y/MARIOFINDERTHREADS*(i+1);
+
+                    //printf(" %d-%d,",start_y,(end_y/MARIOFINDERTHREADS)*(i+1));
+
+        start_y = end_y/MARIOFINDERTHREADS*(i+1)-tilesize_mario_big_y;
     }
     for(int i = 0; i<MARIOFINDERTHREADS;i++){
         threads[i].join();
@@ -108,6 +107,9 @@ bool Mapper::Map_Mario(){
 
     return false;
 }
+
+
+
 
 int Mapper::Create_Array_Around_Mario(bool bigflag){
     for(int x = 0; x < GRIDRADIUS; x++){
@@ -135,6 +137,7 @@ int Mapper::Create_Array_Around_Mario(bool bigflag){
     mariogrid_x+=runden_x;
     mariogrid_y+=runden_y;
     //mariogrid_y = 11;
+    /*
     int array_x = GRIDRADIUS/2;
     int array_y = GRIDRADIUS/2;
     if(mariogrid_x<array_x){
@@ -144,15 +147,42 @@ int Mapper::Create_Array_Around_Mario(bool bigflag){
        array_y=mariogrid_y;
     }
     if(mariogrid_y > (height/TILESIZE)-(GRIDRADIUS/2)-1){
-        array_y= GRIDRADIUS + (height/TILESIZE)-(GRIDRADIUS/2)-1 - mariogrid_y-1;
+        array_y=(height/TILESIZE) -(GRIDRADIUS/2) - mariogrid_y + GRIDRADIUS/2 + array_y-1;
     }
     //printf("%d,,,,",array_y);
     if(mariogrid_x>(width/TILESIZE)-(GRIDRADIUS/2)-1){
-        array_x=(width/TILESIZE)-(GRIDRADIUS/2)-1 - mariogrid_x + GRIDRADIUS/2 + array_x-1;
+        array_x=(width/TILESIZE)-(GRIDRADIUS/2) - mariogrid_x + GRIDRADIUS/2 + array_x-1;
     }
+    */
+    //neue idee: mario nach unten links packen und nach oben um grid/2 dann nach rechts um grid/2
+    int array_x = 0;
+
+    int array_y = 0;
+
+    if(mariogrid_x-(GRIDRADIUS/2) < 0){
+        array_x = (GRIDRADIUS/2) + (mariogrid_x-(GRIDRADIUS/2));
+    }
+    else if(mariogrid_x+(GRIDRADIUS/2)+1 > width/TILESIZE){
+        array_x = (GRIDRADIUS/2)+1 + (mariogrid_x+(GRIDRADIUS/2)-(width/TILESIZE));
+    }
+    else{
+        array_x = GRIDRADIUS/2;
+    }
+    if(mariogrid_y-(GRIDRADIUS/2) < 0){
+        array_y = (GRIDRADIUS/2) + (mariogrid_y-(GRIDRADIUS/2));
+    }
+    else if(mariogrid_y+(GRIDRADIUS/2)+1 > height/TILESIZE){
+        array_y = (GRIDRADIUS/2) + (mariogrid_y+(GRIDRADIUS/2)+1-(height/TILESIZE));
+    }
+    else{
+        array_y = GRIDRADIUS/2;
+    }
+
+    printf("%d %d\n%d %d\n ",mariogrid_x,mariogrid_y,array_x,array_y);
     ErgebnisArray[array_x][array_y]=MARIO;
+
     if(bigflag){
-        if(array_y==GRIDRADIUS){
+        if(array_y<GRIDRADIUS-1){
             ErgebnisArray[array_x][array_y+1]=MARIO;
         }
     }

@@ -20,6 +20,13 @@ PngImage& ImageDistributor::grab_next_enemy_img(bool* done){
                                     &tmp_enemy_img_count, done, 
                                     &ImgLib_ptr->Enemy_Images);
 }
+
+PngImage& ImageDistributor::grab_next_pipe_img(bool* done){
+    return img_grabber(ImgLib_ptr->return_pipe_img_count(), 
+                                    &tmp_pipe_img_count, done, 
+                                    &ImgLib_ptr->Pipe_Images);
+}
+
 PngImage& ImageDistributor::grab_next_item_Non_Static_img(bool* done){
     return img_grabber(ImgLib_ptr->return_item_Non_Static_img_count(), 
                                     &tmp_item_Non_Static_img_count, done,
@@ -38,7 +45,7 @@ PngImage& ImageDistributor::grab_next_block_img(bool* done){
 
 ImageDistributor::ImageDistributor():tmp_mario_Small_img_count(0), tmp_mario_Shroom_img_count(0),
     tmp_mario_Fire_img_count(0),tmp_enemy_img_count(0),tmp_item_Non_Static_img_count(0),
-    tmp_item_Static_img_count(0),tmp_block_img_count(0){
+    tmp_item_Static_img_count(0),tmp_block_img_count(0), tmp_pipe_img_count(0){
     ImgLib_ptr = ImageLibrary::getInstance();
 }
 

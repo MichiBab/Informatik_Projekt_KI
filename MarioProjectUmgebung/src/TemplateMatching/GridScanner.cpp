@@ -19,14 +19,12 @@ GridScanner::~GridScanner(){
 
 }
 
-bool GridScanner::grid_matching_static(int grid_x, int grid_y, PngImage &matchingImg){
-    int erg = 0;
-    erg = matcher.match_tilesize_on_pixel(grid_x*TILESIZE,grid_y*TILESIZE,matchingImg);
-    
-    return IS_A_MATCH(erg);
+bool GridScanner::grid_matching_static(int grid_x, int grid_y, PngImage &matchingImg, int untere_flanke, int obere_flanke){
+    int erg = matcher.match_tilesize_on_pixel(grid_x*TILESIZE,grid_y*TILESIZE,matchingImg);
+    return (untere_flanke<=erg && erg <=obere_flanke);
 }
 
-bool GridScanner::grid_matching_non_static(int grid_x, int grid_y, PngImage &matchingImg){
+bool GridScanner::grid_matching_non_static(int grid_x, int grid_y, PngImage &matchingImg, int untere_flanke, int obere_flanke){
     int highest = 0;
     int height = distr.grab_resized_img().return_height();
     int width = distr.grab_resized_img().return_width();
@@ -48,8 +46,8 @@ bool GridScanner::grid_matching_non_static(int grid_x, int grid_y, PngImage &mat
             tmp = matcher.match_tilesize_on_pixel(x,y,matchingImg);
             if(tmp>highest){
                 highest = tmp;
-                if(IS_A_MATCH(highest)) {
-                    printf("HIT ON GRID: %d %d \n",grid_x,grid_y);
+                if(untere_flanke<=highest && highest <=obere_flanke) {
+                    //printf("HIT ON GRID: %d %d \n",grid_x,grid_y);
                     return true;}
             }
         }

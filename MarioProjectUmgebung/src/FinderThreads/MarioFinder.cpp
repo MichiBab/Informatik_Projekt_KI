@@ -49,7 +49,7 @@ bool MarioFinder::search_for_Mario(int x_start, int x_end, int y_start, int y_en
     TemplateMatcher matcher(resized);
     bool am_i_done = false;
     int erg = 0;
-
+    int highest = 0;
     while(true){
         PngImage& rBlock = distr.grab_next_mario_Small_img(&am_i_done);
         if(am_i_done){break;}
@@ -60,13 +60,13 @@ bool MarioFinder::search_for_Mario(int x_start, int x_end, int y_start, int y_en
                     x_pos=x;
                     y_pos=y;
                     is_big=false;
-                   
                     return true;
                 }
             }
         }
     }
     //BigMario
+    am_i_done=false;
     while(true){
         PngImage& rBlock = distr.grab_next_mario_Shroom_img(&am_i_done);
         if(am_i_done){break;}
@@ -82,6 +82,7 @@ bool MarioFinder::search_for_Mario(int x_start, int x_end, int y_start, int y_en
             }
         }
     }
+    am_i_done=false;
     while(true){
         PngImage& rBlock = distr.grab_next_mario_Fire_img(&am_i_done);
         if(am_i_done){break;}

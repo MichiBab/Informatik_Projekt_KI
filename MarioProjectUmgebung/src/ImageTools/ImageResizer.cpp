@@ -72,8 +72,8 @@ bool ImageResizer::find_block(){
         //PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
         PngImage& rBlock = distr.grab_next_block_img(&am_i_done);
         if(am_i_done){break;}
-        for(int y = 0; y < height-TILESIZE;y++){
-            for(int x = 0; x < width-TILESIZE;x++){
+        for(int y = 0; y <= height-TILESIZE;y++){
+            for(int x = 0; x<= width-TILESIZE;x++){
                 erg = matcher.match_tilesize_on_pixel(x,y,rBlock);
                 if(IS_A_MATCH(erg)){
                     resizing_data[X_Start]=x;

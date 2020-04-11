@@ -17,3 +17,10 @@ Testungen:
 
     ==> Radius der Genauigkeit auf 40? Also wenn punkt-40> input <punkt+40
     richtig ist war es ein treffer?
+
+    //goombas kommen bei block tiles auf 120,
+    //koopa auf koopa kommt so auf 158 bei einem falschen bild,
+    auf 181 beim richtingen
+    //goomba 184 - 188
+    ==> enemykalibrierung 175 - 195
+    

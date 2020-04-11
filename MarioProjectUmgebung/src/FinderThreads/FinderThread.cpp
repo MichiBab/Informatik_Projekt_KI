@@ -11,6 +11,49 @@
 };
 */
 
+void print_rgb_data_png_file(PngImage& inp) {
+  printf("\n");
+  int height = inp.return_height();
+  int width = inp.return_width();
+  int wertsize = 10000;
+  int werte[wertsize][3];
+  for(int i = 0; i<wertsize;i++){
+    for(int y = 0; y<3;y++){
+      werte[i][y]=0;
+    }
+  }
+  for(int y = 0; y <height ; y++) {
+    png_bytep row = inp.row_pointers[y];
+    for(int x = 0; x <width; x++) {
+      png_bytep px = &(row[x * 4]);
+      //printf("%4d, %4d = RGBA(%3d, %3d, %3d, %3d)\n", x, y, px[0], px[1], px[2], px[3]);
+      // Do something awesome for each pixel here...
+      for(int i = 0; i<wertsize;i++){
+        if(werte[i][0] == px[0] && werte[i][1] == px[1] && werte[i][2] == px[2]){
+          i=wertsize;
+        }
+        else if(werte[i][0] == 0 && werte[i][1] == 0 && werte[i][2] == 0){
+          werte[i][0]=px[0];
+          werte[i][1]=px[1];
+          werte[i][2]=px[2];
+          i=wertsize;
+          }
+     
+        }
+      }
+  }
+  //ausgabe:
+  for(int i = 0; i<wertsize;i++){
+        if(werte[i][0] == 0 && werte[i][1] == 0 && werte[i][2] == 0){
+          i=wertsize;//break
+        }
+        else{
+          printf("RGB(%3d, %3d, %3d)\n", werte[i][0], werte[i][1], werte[i][2]);
+        }
+    }
+}
+
+
 FinderThread::FinderThread(int TYP): resized(distr.grab_resized_img()) , gridsc(){
   this->typ = TYP;
 }
@@ -27,10 +70,12 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
       while(true){
         PngImage& img = distr.grab_next_enemy_img(&am_i_done);
         if(am_i_done){break;}
+        //printf("\nNEW ENEMY:");
+        //print_rgb_data_png_file(img);
         for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
           for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
             if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
-              if(gridsc.grid_matching_non_static(x,y,img)){
+              if(gridsc.grid_matching_non_static(x,y,img,ENEMY_UNTERE_FLANKE,ENEMY_OBERE_FLANKE)){
                 mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ENEMY);
               }
             }
@@ -45,20 +90,21 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
         for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
           for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
             if(mapper->check_if_free(x,y)){
-              if(gridsc.grid_matching_non_static(x,y,img)){
+              if(gridsc.grid_matching_non_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){//TODO SHROOMS KALIBRIEREN
                 mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
               }
             }
           }
         }
       }
+      am_i_done=false;
       while(true){
         PngImage& img = distr.grab_next_item_Static_img(&am_i_done);
         if(am_i_done){break;}
         for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
           for(int y = gridpositions[Y_Start]; y<=gridpositions[Y_End];y++){
             if(mapper->check_if_free(x,y)){
-              if(gridsc.grid_matching_static(x,y,img)){
+              if(gridsc.grid_matching_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){//TODO FLOWER KALIBRIEREN
                 mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], ITEM);
               }
             }
@@ -73,7 +119,21 @@ bool FinderThread::search(int gridpositions[MAPPINGDATA], Mapper *mapper){
         for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
           for(int y = gridpositions[Y_Start]; y<= gridpositions[Y_End];y++){
             if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
-              if(gridsc.grid_matching_static(x,y,img)){
+              if(gridsc.grid_matching_static(x,y,img,BLOCK_UNTERE_FLANKE,BLOCK_OBERE_FLANKE)){
+                mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], BLOCK);
+              }
+            }
+          }
+        }
+      }
+      am_i_done=false;
+      while(true){
+        PngImage& img = distr.grab_next_pipe_img(&am_i_done);
+        if(am_i_done)break;
+        for(int x = gridpositions[X_Start]; x<= gridpositions[X_End];x++){
+          for(int y = gridpositions[Y_Start]; y<= gridpositions[Y_End];y++){
+            if(mapper->check_if_free(x-gridpositions[X_Start],y-gridpositions[Y_Start])){
+              if(gridsc.grid_matching_static(x,y,img,PIPES_UNTERE_FLANKE,PIPES_OBERE_FLANKE)){
                 mapper->write_to_output_array(x-gridpositions[X_Start], y-gridpositions[Y_Start], BLOCK);
               }
             }

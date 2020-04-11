@@ -33,7 +33,8 @@ ImageLibrary::ImageLibrary() : mario_Small_img_count(0), mario_Shroom_img_count(
     init_vector("pictures/Items/Items_Static",&item_Static_img_count,&Item_Static_Images);
 
     //init blocks
-    init_vector("pictures/Ground",&block_img_count,&Ground_Images);
+    init_vector("pictures/Ground/bloecke",&block_img_count,&Ground_Images);
+    init_vector("pictures/Ground/pipes",&pipes_img_count,&Pipe_Images);
 }
 
 int ImageLibrary::return_mario_Small_img_count(){
@@ -56,6 +57,10 @@ int ImageLibrary::return_item_Non_Static_img_count(){
 }
 int ImageLibrary::return_block_img_count(){
     return block_img_count;
+}
+
+int ImageLibrary::return_pipe_img_count(){
+    return pipes_img_count;
 }
 
 int ImageLibrary::set_input_image(PngImage input){

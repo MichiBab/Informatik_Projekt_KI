@@ -13,6 +13,7 @@ private:
     int item_Non_Static_img_count;
     int item_Static_img_count;
     int block_img_count;
+    int pipes_img_count;
     int init_vector(const char* pathchar, int* imgcounter, std::vector<PngImage> *vec);
 
     //For Singleton Desing Pattern
@@ -40,6 +41,7 @@ public:
     std::vector <PngImage> Item_Non_Static_Images;
     //PngImage *Ground_Images;
     std::vector <PngImage> Ground_Images;
+    std::vector <PngImage> Pipe_Images;
 
     PngImage Input_Img;
     PngImage Resized_Img;
@@ -50,6 +52,7 @@ public:
     int return_enemy_img_count();
     int return_item_Non_Static_img_count();
     int return_block_img_count();
+    int return_pipe_img_count();
     int set_input_image(PngImage input);
     int set_resized_image(PngImage resized);
     //ImageLibrary();

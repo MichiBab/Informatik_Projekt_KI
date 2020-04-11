@@ -13,8 +13,8 @@ private:
 public:
     GridScanner();
     ~GridScanner();
-    bool grid_matching_static(int grid_x, int grid_y, PngImage &matchingImg);
-    bool grid_matching_non_static(int grid_x, int grid_y, PngImage &matchingImg);
+    bool grid_matching_static(int grid_x, int grid_y, PngImage &matchingImg, int untere_flanke, int obere_flanke);
+    bool grid_matching_non_static(int grid_x, int grid_y, PngImage &matchingImg, int untere_flanke, int obere_flanke);
 };
 
 #endif
