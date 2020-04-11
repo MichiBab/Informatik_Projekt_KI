@@ -4,7 +4,7 @@
 #include "../ImageTools/header/PngImage.h"
 #include "../ImageTools/header/ImageLibrary.h"
 #include "header/Environment.h"
-
+#include "header/Globals.h"
 using namespace std;
 
 #include <zlib.h>
@@ -18,8 +18,10 @@ int main () {
    
    auto start = std::chrono::system_clock::now();
    Environment fsm;
+   int ergArray[GRIDRADIUS][GRIDRADIUS];
    for(int i = 0; i<1;i++){
-      fsm.environment_interface("pictures/Input/input.png");
+
+      fsm.environment_interface("pictures/Input/input.png",ergArray);
    }
 
    auto end = std::chrono::system_clock::now();

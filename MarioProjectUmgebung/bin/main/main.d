@@ -12,4 +12,5 @@ bin/main/main.o: src/main/main.cpp \
  src/main/header/../../ImageTools/header/../../main/header/Globals.h \
  src/main/header/../../TemplateMatching/header/Mapper.h \
  src/main/header/../../TemplateMatching/header/../../ImageTools/header/ImageDistributor.h \
- src/main/header/../../TemplateMatching/header/../../main/header/Globals.h
+ src/main/header/../../TemplateMatching/header/../../main/header/Globals.h \
+ src/main/header/../../main/header/Globals.h src/main/header/Globals.h

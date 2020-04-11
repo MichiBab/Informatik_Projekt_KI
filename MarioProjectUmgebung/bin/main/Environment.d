@@ -12,6 +12,7 @@ bin/main/Environment.o: src/main/Environment.cpp \
  src/main/header/../../TemplateMatching/header/Mapper.h \
  src/main/header/../../TemplateMatching/header/../../ImageTools/header/ImageDistributor.h \
  src/main/header/../../TemplateMatching/header/../../main/header/Globals.h \
+ src/main/header/../../main/header/Globals.h \
  src/main/../ImageTools/header/PngImage.h \
  src/main/../ImageTools/header/ImageLibrary.h \
  src/main/../ImageTools/header/ImageDistributor.h \

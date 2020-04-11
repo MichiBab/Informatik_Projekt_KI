@@ -10,9 +10,9 @@
 
 
 
-int Environment::environment_interface(const char* filename){
+int Environment::environment_interface(const char* filename, int arr[GRIDRADIUS][GRIDRADIUS]){
     PngImage inp(filename);
-    give_Input(inp);
+    give_Input(inp,arr);
 }
 
 //constructor
@@ -24,7 +24,7 @@ Environment::~Environment(){
 
 }
 
-int Environment::give_Input(PngImage& new_input){
+int Environment::give_Input(PngImage& new_input,int arr[GRIDRADIUS][GRIDRADIUS]){
     image_library->set_input_image(new_input);
     if(resize.resize()){
         if(mapper.Map_Mario()){
@@ -35,12 +35,11 @@ int Environment::give_Input(PngImage& new_input){
             //mapper.print_erg_radius();
 
             //return array test
-            int myarr[GRIDRADIUS][GRIDRADIUS];
-            mapper.return_erg_array(myarr);
+            mapper.return_erg_array(arr);
             printf("\n");
             for(int y = 0; y<GRIDRADIUS;y++){
                 for(int x= 0; x<GRIDRADIUS;x++){
-                    printf("%d ",myarr[x][y]);
+                    printf("%d ",arr[x][y]);
                 }
                 printf("\n");
             }
