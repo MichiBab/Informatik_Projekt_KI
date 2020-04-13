@@ -89,6 +89,7 @@ bool Mapper::Map_Mario(){
     if(end_x>width-TILESIZE)end_x = width-TILESIZE;
     if(end_y>height-TILESIZE)end_y = height-TILESIZE;
     //printf("%4d,%4d",height,width);
+    /*
     //NEUER EINTRAG WEGEN BOUNDARY ERROR
     bool isfound = false;
     MarioFinder finders;
@@ -98,8 +99,8 @@ bool Mapper::Map_Mario(){
         last_mario_pos_y = finders.return_y_pos();
         Create_Array_Around_Mario(finders.return_is_big());
     }
+    */
     
-    /*
     bool bools[MARIOFINDERTHREADS];
     std::thread threads[MARIOFINDERTHREADS];
     MarioFinder finders[MARIOFINDERTHREADS];
@@ -127,7 +128,7 @@ bool Mapper::Map_Mario(){
     }
     //-------------------------------------------------------------------------------------
     //such im ganzen foto nochmal, vielleicht ist er gestorben und seine near position ist weg
-    */
+    
     start_x = 0;
     start_y = 0;
     end_x = width-TILESIZE;
