@@ -27,4 +27,13 @@ Testungen:
     not multithreading enemys items: 0.34 sec bei 13x13
         mit: jede spalte 1 thread: 0.08 sec
 
+//ZU MEMLEAK:
+    vielleicht leak weil der Destructor aufgerufen wird bei NullObjekten von PngImage; mit dem Leeren Konstruktor.
+    Entweder: IMAGELIBRARY Die Images auf Pointer stellen, oder ein Flag ob das Image created ist damit der Destructor
+    nichts free'd was er nicht darf.
+
+Winning: 
+    Fahne:
+       
+
     

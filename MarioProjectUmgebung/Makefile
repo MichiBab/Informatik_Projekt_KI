@@ -4,7 +4,7 @@ LD	:= g++
 LFLAGS := -g -pthread -lpng -lstdc++fs 
 CFLAGS := -g -pthread -MD -MMD -lstdc++fs
 
-MODULES := main FinderThreads ImageTools TemplateMatching
+MODULES := main
 SRC_DIR := $(addprefix src/,$(MODULES))
 BUILD_DIR := $(addprefix bin/,$(MODULES))
 

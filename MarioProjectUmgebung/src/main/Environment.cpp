@@ -1,19 +1,21 @@
-#include "header/Environment.h"
-#include "../ImageTools/header/PngImage.h"
-#include "../ImageTools/header/ImageLibrary.h"
-#include "../ImageTools/header/ImageDistributor.h"
-#include "../ImageTools/header/ImageResizer.h"
-#include "../TemplateMatching/header/Mapper.h"
-#include "../TemplateMatching/header/TemplateMatcher.h"
-#include "../FinderThreads/header/MarioFinder.h"
+#include "Environment.h"
+#include "PngImage.h"
+#include "ImageLibrary.h"
+#include "ImageDistributor.h"
+#include "ImageResizer.h"
+#include "Mapper.h"
+#include "TemplateMatcher.h"
+#include "MarioFinder.h"
+#include "Deathcondition.h"
 #include <iostream>
 #include <chrono>
 #include <ctime>  
 
 
-int Environment::environment_interface(const char* filename, int arr[GRIDRADIUS][GRIDRADIUS]){
+int Environment::environment_interface(const char* filename, int arr[GRIDRADIUS][GRIDRADIUS], int* status){
     PngImage inp(filename);
-    give_Input(inp,arr);
+    give_Input(inp,arr,status);
+    return 0;
 }
 
 //constructor
@@ -21,11 +23,9 @@ Environment::Environment(){
     image_library = ImageLibrary::getInstance(); 
 }
 
-Environment::~Environment(){
+Environment::~Environment()=default;
 
-}
-
-int Environment::give_Input(PngImage& new_input,int arr[GRIDRADIUS][GRIDRADIUS]){
+int Environment::give_Input(PngImage& new_input,int arr[GRIDRADIUS][GRIDRADIUS], int* status){
     image_library->set_input_image(new_input);
     auto start = std::chrono::system_clock::now();
     if(resize.resize()){
@@ -40,14 +40,14 @@ int Environment::give_Input(PngImage& new_input,int arr[GRIDRADIUS][GRIDRADIUS])
 
             //return array test
             mapper.return_erg_array(arr);
-            printf("\n");
-            for(int y = 0; y<GRIDRADIUS;y++){
-                for(int x= 0; x<GRIDRADIUS;x++){
-                    printf("%d ",arr[x][y]);
-                }
-                printf("\n");
-            }
-            printf("\n");
+            //printf("\n");
+            //for(int y = 0; y<GRIDRADIUS;y++){
+            //    for(int x= 0; x<GRIDRADIUS;x++){
+            //        printf("%d ",arr[x][y]);
+            //    }
+            //    printf("\n");
+            //}
+            //printf("\n");
             auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;
     std::time_t end_time = std::chrono::system_clock::to_time_t(end);
@@ -58,5 +58,12 @@ int Environment::give_Input(PngImage& new_input,int arr[GRIDRADIUS][GRIDRADIUS])
         }
     
     }
+    //kein block wurde gefunden. Check if Deathscreen
+    Deathcondition deathcond;
+    bool isdead = deathcond.return_Is_Dead();
+    if(isdead){
+        *status = TOT;
+    }
+    std::cout<<"\nMario is dead == "<<isdead<<"\n";
     return -1;
 }
