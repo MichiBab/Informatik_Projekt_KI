@@ -1,6 +1,6 @@
 #include "PngImage.h"
 #include <stdlib.h>
-
+#include <cstring>
 //Reads in the Image and fills in the row_pointers and data
 bool PngImage::read_png_file(const char* filename){
     FILE *fp = fopen(filename, "rb");
@@ -66,6 +66,7 @@ bool PngImage::read_png_file(const char* filename){
 
 PngImage::PngImage(const char* filename){
     read_png_file(filename);
+  //  myname = filename;
 }
 
 PngImage::PngImage(){
@@ -80,12 +81,23 @@ int PngImage::return_width(){
     return PngImage::width;
 }
 
+/*
+PngImage::PngImage(const PngImage& img): row_pointers((png_bytep*)malloc(sizeof(*row_pointers))){
+    std::memcpy(row_pointers, img.row_pointers, sizeof(*row_pointers));
+    width = img.width;
+    height = img.height;
+    color_type = img.color_type;
+    bit_depth = img.bit_depth;
+    filename = img.filename;
+    created_flag = img.created_flag;
+}*/
+
 PngImage::~PngImage(){
     //Check if Image was created, to free the mallocated row pointers
-    /*if(created_flag){
+    if(created_flag){
         for(int y = 0; y < height; y++) {
             free(row_pointers[y]);
         }
         free(row_pointers);
-    }*/
+    }
 }

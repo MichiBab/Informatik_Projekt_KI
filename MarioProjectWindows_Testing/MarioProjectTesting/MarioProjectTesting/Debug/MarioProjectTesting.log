@@ -1,0 +1,27 @@
+﻿  Deathcondition.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  Environment.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  FinderThread.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  GridScanner.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  ImageDistributor.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  ImageLibrary.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  ImageResizer.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  main.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\packages\pthreads.2.9.1.4\build\native\include\pthread.h(320,17): error C2011: 'timespec': 'struct' type redefinition
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.18362.0\ucrt\time.h(39): message : see declaration of 'timespec'
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  Mapper.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  MarioFinder.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  PngImage.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  TemplateMatcher.cpp
+C:\Users\michi\OneDrive - haw-hamburg.de\Informatik_Projekt_KI\MarioProjectWindows_Testing\MarioProjectTesting\PngImage.h(4,10): fatal error C1083: Cannot open include file: 'png.h': No such file or directory
+  Generating Code...

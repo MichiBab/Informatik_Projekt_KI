@@ -14,15 +14,24 @@ ImageLibrary* ImageLibrary::getInstance(){
 }
 
 ImageLibrary::ImageLibrary() : mario_Small_img_count(0), mario_Shroom_img_count(0), mario_Fire_img_count(0),
-                enemy_img_count(0), item_Non_Static_img_count(0),item_Static_img_count(0), block_img_count(0){
+                enemy_img_count(0), item_Non_Static_img_count(0),item_Static_img_count(0), block_img_count(0)/*, 
+                                                                                   winningconditions_img_count(0)*/{
     
     //Init Input
     const char *path_to_input = "pictures/Input/input.png";
     Input_Img = PngImage(path_to_input);
-
+    Input_Img.~PngImage();
+    
     //init deathscreen
     const char *path_to_deathscreen = "pictures/Deathscreen/deathscreen.png";
     Deathscreen_Img = PngImage(path_to_deathscreen);
+
+    //init flagpole
+    const char *path_to_flagpole = "pictures/Winningconditions/Flagpole/Flagpole.png";
+    Flagpole_Img = PngImage(path_to_flagpole);
+    
+    
+    set_input_image(Deathscreen_Img);
 
     //init enemys
     init_vector("pictures/Enemys",&enemy_img_count,&Enemy_Images);
@@ -40,9 +49,15 @@ ImageLibrary::ImageLibrary() : mario_Small_img_count(0), mario_Shroom_img_count(
     init_vector("pictures/Ground/bloecke",&block_img_count,&Ground_Images);
     init_vector("pictures/Ground/pipes",&pipes_img_count,&Pipe_Images);
 
+    //init winningconds
+    //init_vector("pictures/Winningconditions", &winningconditions_img_count, &Winningconditions_Imgages);
     
 
 }
+
+//int ImageLibrary::return_winningconditions_img_count() {
+//    return winningconditions_img_count;
+//}
 
 int ImageLibrary::return_mario_Small_img_count(){
     return mario_Small_img_count;
@@ -70,12 +85,12 @@ int ImageLibrary::return_pipe_img_count(){
     return pipes_img_count;
 }
 
-int ImageLibrary::set_input_image(PngImage input){
+int ImageLibrary::set_input_image(PngImage& input){
     Input_Img=input;
     return 0;
 }
 
-int ImageLibrary::set_resized_image(PngImage resized){
+int ImageLibrary::set_resized_image(PngImage& resized){
     Resized_Img=resized;
     return 0;
 }
@@ -88,7 +103,6 @@ int ImageLibrary::init_vector(const char* pathchar, int* imgcounter,
     for (const auto & entry : fs::directory_iterator(path)){
         std::string pat = entry.path().string();
         const char *c = pat.c_str();
-        PngImage tmp(c);
         vec->push_back(PngImage(c));
         count++;
     }

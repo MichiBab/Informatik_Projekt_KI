@@ -1,6 +1,6 @@
 #ifndef pngimage_h
 #define pngimage_h
-
+#include <string>
 #include <png.h>
 #include <zlib.h>
 class PngImage{
@@ -12,6 +12,7 @@ class PngImage{
         char* filename;
         bool read_png_file(const char* filename);  
         bool created_flag = false;
+        //std::string myname;
     public:
         png_bytep *row_pointers = NULL;
         PngImage(const char *filename);
@@ -19,6 +20,7 @@ class PngImage{
         ~PngImage();
         int return_height();
         int return_width();
+       // PngImage(const PngImage &img);
 };
 
 #endif

@@ -4,11 +4,11 @@
 
 TemplateMatcher::~TemplateMatcher()=default;
 
-int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite){
+int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage &sprite){
     return match_tilesize_on_pixel(x_pos,y_pos,sprite,TILESIZE,TILESIZE);
 }
 
-int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage sprite, int tilesize_X, int tilesize_Y){
+int TemplateMatcher::match_tilesize_on_pixel(int x_pos, int y_pos, PngImage &sprite, int tilesize_X, int tilesize_Y){
     int matchings = 0;
     for(int y = 0; y < tilesize_Y; y++){
             png_bytep img_row = input_ptr->row_pointers[y_pos+y];
